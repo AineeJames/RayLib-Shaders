@@ -9,9 +9,14 @@ uniform vec4 colDiffuse;
 
 uniform vec2 resolution;
 uniform vec2 mousepos;
+uniform float time;
 
 void main()
 {
-  vec4 color = vec4(mousepos / resolution, 0, 1);
+  vec2 uv = fragTexCoord * 2.0 - 1.0; 
+  uv.x *= resolution.x / resolution.y;
+  float d = length(uv);
+  vec4 color = vec4(d, 0.0, 0.0, 1.0);
+
   fragColor = color;
 }

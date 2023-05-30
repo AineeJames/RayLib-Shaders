@@ -15,15 +15,17 @@ int main(void) {
   Shader shader = LoadShader(NULL, "./shader.fs");
   int resolutionLoc = GetShaderLocation(shader, "resolution");
   int mouseposLoc = GetShaderLocation(shader, "mousepos");
+  int timeLoc = GetShaderLocation(shader, "time");
   Vector2 resolution = {window_width, window_height};
   PRINT_VEC2(resolution);
   SetShaderValue(shader, resolutionLoc, &resolution, SHADER_UNIFORM_VEC2);
 
   while (!WindowShouldClose()) {
 
-
     Vector2 mousepos = GetMousePosition();
     SetShaderValue(shader, mouseposLoc, &mousepos, SHADER_UNIFORM_VEC2);
+    float time = (float)GetTime();
+    SetShaderValue(shader, timeLoc, &time, SHADER_UNIFORM_FLOAT);
 
     BeginTextureMode(target);       // Enable drawing to texture
       ClearBackground(BLACK);     // Clear the render texture

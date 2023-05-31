@@ -29,6 +29,7 @@ int main(void) {
   Shader shader = LoadShader(NULL, fragShaderFileName);
   bool shaderAutoReloading = true;
 
+  cube_model.materials[0].shader = shader;
 
   int resolutionLoc = GetShaderLocation(shader, "resolution");
   int mouseposLoc = GetShaderLocation(shader, "mousepos");
@@ -62,19 +63,11 @@ int main(void) {
             }
     }
 
-    BeginTextureMode(target);       // Enable drawing to texture
-      ClearBackground(BLACK);     // Clear the render texture
-      DrawRectangle(0, 0, window_width, window_height, BLACK);
-    EndTextureMode();
-
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    BeginShaderMode(shader);
-      DrawTextureEx(target.texture, (Vector2){0, 0}, 0, 1, WHITE);
-    EndShaderMode();
-    DrawFPS(0, 0);
+      DrawFPS(0, 0);
       BeginMode3D(camera);
-      DrawModel(cube_model,cube_position,0.1f,WHITE);
+      DrawModel(cube_model,cube_position,1.0f,WHITE);
       DrawGrid(10,1.0f);
       EndMode3D();
     EndDrawing();

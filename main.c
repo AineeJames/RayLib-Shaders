@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "raylib.h"
+#include "rlgl.h"
 
 #define PRINT_VEC2(var) printf("%s = {%f, %f}\n", #var, var.x, var.y);
 
@@ -12,7 +13,12 @@ int main(void) {
 
   RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
 
-  Shader shader = LoadShader(NULL, "./shader.fs");
+  const char *fragShaderFileName = "./shader.fs";
+  time_t fragShaderFileModTime = GetFileModTime(fragShaderFileName);
+  Shader shader = LoadShader(NULL, fragShaderFileName);
+  bool shaderAutoReloading = true;
+
+
   int resolutionLoc = GetShaderLocation(shader, "resolution");
   int mouseposLoc = GetShaderLocation(shader, "mousepos");
   int timeLoc = GetShaderLocation(shader, "time");
@@ -26,6 +32,24 @@ int main(void) {
     SetShaderValue(shader, mouseposLoc, &mousepos, SHADER_UNIFORM_VEC2);
     float time = (float)GetTime();
     SetShaderValue(shader, timeLoc, &time, SHADER_UNIFORM_FLOAT);
+
+    if (shaderAutoReloading){
+	    long currentFragShaderModTime = GetFileModTime(fragShaderFileName);
+	    if(currentFragShaderModTime != fragShaderFileModTime)
+            {
+		Shader updatedShader = LoadShader(NULL,fragShaderFileName);
+		if(updatedShader.id != rlGetShaderIdDefault()){
+			UnloadShader(shader);
+			shader = updatedShader;
+		
+			resolutionLoc = GetShaderLocation(shader, "resolution");
+			mouseposLoc = GetShaderLocation(shader, "mousepos");
+			timeLoc = GetShaderLocation(shader, "time");
+			SetShaderValue(shader,resolutionLoc, &resolution, SHADER_UNIFORM_VEC2);
+		}
+		fragShaderFileModTime = currentFragShaderModTime;
+            }
+    }
 
     BeginTextureMode(target);       // Enable drawing to texture
       ClearBackground(BLACK);     // Clear the render texture

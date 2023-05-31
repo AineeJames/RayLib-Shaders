@@ -14,7 +14,7 @@ int main(void) {
   RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
 
   const char *fragShaderFileName = "./shader.fs";
-  time_t fragShaderFileModTime = GetFileModTime(fragShaderFileName);
+  long fragShaderFileModTime = GetFileModTime(fragShaderFileName);
   Shader shader = LoadShader(NULL, fragShaderFileName);
   bool shaderAutoReloading = true;
 

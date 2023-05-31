@@ -6,7 +6,7 @@
 
 int main(void) {
 
-  const int window_width = 800;
+  const int window_width = 600;
   const int window_height = 600;
   InitWindow(window_width, window_height, "Shaders");
   // SetTargetFPS(60);

@@ -12,9 +12,11 @@ int main(void) {
 
   RenderTexture2D target =
       LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
-  Mesh cube = GenMeshCube(1, 1, 1);
+  // Mesh cube = GenMeshSphere(2, 32, 32);
   Material defaultmat = LoadMaterialDefault();
-  Model cube_model = LoadModelFromMesh(cube);
+  // Model cube_model = LoadModelFromMesh(cube);
+
+  Model cube_model = LoadModel("monkey.obj");
   Vector3 cube_position = {0.0f, 0.0f, 0.0f}; // Set model position
 
   Camera camera = {0};

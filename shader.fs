@@ -27,11 +27,11 @@ void main()
   vec2 uv0 = uv;
   vec3 finalcolor = vec3(0.0);
 
-  for (float i = 0.0; i < 4.0; i+=5) {
+  for (float i = 0.0; i < 10.0; i+=5) {
     uv = fract(uv * 2.0) - 0.5;
 
     float d = length(uv) + sin(time / 4) * exp(-length(uv0));
-    vec3 color = palette(length(uv0) + time);
+    vec3 color = palette(length(uv0));
     d = sin(8.*d + time/2)/8.;
     d = abs(d);
     d = smoothstep(0.0, 0.1, d);

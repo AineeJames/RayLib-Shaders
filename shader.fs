@@ -16,7 +16,9 @@ void main()
   vec2 uv = fragTexCoord * 2.0 - 1.0; 
   uv.x *= resolution.x / resolution.y;
   float d = length(uv);
-  vec4 color = vec4(d, 0.0, 0.0, 1.0);
+  d -= 0.5;
+  d = abs(d);
+  vec4 color = vec4(d, d, d, 1.0);
 
   fragColor = color;
 }
